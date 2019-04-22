@@ -1,0 +1,30 @@
+.page__main{
+    display:flex;
+    flex-direction: row;
+    //flex-wrap: wrap;
+    min-width: 100vw;
+    min-height: 100vh;
+    border:1px solid black;
+}
+// .searcher{
+//     border: 1px solid blue;
+//     width: 50vw;
+//     height: 25%;
+// }
+
+// .favorites{
+//     border: 1px solid blue;
+//     width: 50vw;
+//     height: 75%;
+// }
+
+.navigation{
+    border: 1px solid pink;
+    height: 100vh;
+    width: 30vw;
+}
+.search-result{
+    border: 1px solid blue;
+    width: 50vw;
+    height: 100%;
+}

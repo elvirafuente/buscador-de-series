@@ -4,6 +4,7 @@
 const inputEl = document.querySelector('#show');
 const buttonEl = document.querySelector('.button');
 const resultList = document.querySelector('.result-list');
+let favoriteShowsList = [];
 
 
 
@@ -18,6 +19,8 @@ function searchHandler(){
       const seriesList = data;
       for (let i = 0; i < seriesList.length; i++){
         const showName = seriesList[i].show.name;
+        const showId = seriesList[i].show.id;
+        console.log(`showId: ${showId}`);
         const newShow = document.createElement('li');
         newShow.classList.add('show-result');
         const newShowTitle = document.createElement('h3');
@@ -27,7 +30,7 @@ function searchHandler(){
         newShow.appendChild(newShowTitle);
         newShowTitle.appendChild(newShowTitleContent);
         newShow.appendChild(newShowImg);
-        newShow.addEventListener('click', addFavorites);
+        newShow.addEventListener('click', addFavoritesClass);
         if(!seriesList[i].show.image){
           newShowImg.src = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
         } else {
@@ -44,8 +47,19 @@ function cleanList(){
   }
 }
 
-function addFavorites(event){
+function addFavoritesClass(event){
   event.currentTarget.classList.toggle('show-result--favorite');
+  console.log(event.currentTarget.children[1].src);
+  addToFavoritesList();
+}
+
+function addToFavoritesList(){
+  const favoriteShow = {};
+  favoriteShow.name = event.currentTarget.children[0].innerHTML;
+  favoriteShow.imgUrl = event.currentTarget.children[1].src;
+  favoriteShowsList.push(favoriteShow);
+  console.log(favoriteShowsList);
+
 }
 
 //listener
