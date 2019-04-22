@@ -6,8 +6,11 @@ const buttonEl = document.querySelector('.button');
 const resultList = document.querySelector('.result-list');
 
 
+
 function searchHandler(){
+  cleanList();
   const inputShow = inputEl.value;
+  
   fetch (`http://api.tvmaze.com/search/shows?q=${inputShow}`)
     .then(function(response) {
       return response.json();
@@ -17,6 +20,7 @@ function searchHandler(){
       for (let i = 0; i < seriesList.length; i++){
         const showName = seriesList[i].show.name;
         const newShow = document.createElement('li');
+        newShow.classList.add('show-result');
         const newShowTitle = document.createElement('h3');
         const newShowTitleContent = document.createTextNode(showName);
         const newShowImg = document.createElement('img');
@@ -30,10 +34,22 @@ function searchHandler(){
           const showImgUrl = seriesList[i].show.image.medium;
           newShowImg.src = showImgUrl;
         }
-      }
+      }    
     });
-
 }
+
+function cleanList(){
+  if(resultList.innerHTML){
+    resultList.innerHTML = '';
+  }
+}
+// function paintFavoriteStyle (event){
+//   const resultItems = document.querySelectorAll('.show-result');
+//   //const itemSelected = event.currentTarget;
+//   console.log(itemSelected);
+// }
 
 //listener
 buttonEl.addEventListener('click', searchHandler);
+//listener click favoritos
+// resultItem.addEventListener('click', paintFavoriteStyle);
