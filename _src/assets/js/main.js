@@ -6,7 +6,17 @@ const buttonEl = document.querySelector('.button');
 
 function searchHandler(){
   const inputShow = inputEl.value;
-  console.log(inputShow);
+  fetch (`http://api.tvmaze.com/search/shows?q=${inputShow}`)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data){ 
+      const seriesList = data;
+      for (let i = 0; i < seriesList.length; i++){
+        console.log(`serie name: ${seriesList[i].show.name}`);
+      }
+    });
+
 }
 
 //listener
