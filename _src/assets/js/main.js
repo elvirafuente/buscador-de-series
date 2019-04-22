@@ -9,8 +9,7 @@ const resultList = document.querySelector('.result-list');
 
 function searchHandler(){
   cleanList();
-  const inputShow = inputEl.value;
-  
+  const inputShow = inputEl.value;  
   fetch (`http://api.tvmaze.com/search/shows?q=${inputShow}`)
     .then(function(response) {
       return response.json();
@@ -28,6 +27,7 @@ function searchHandler(){
         newShow.appendChild(newShowTitle);
         newShowTitle.appendChild(newShowTitleContent);
         newShow.appendChild(newShowImg);
+        newShow.addEventListener('click', addFavorites);
         if(!seriesList[i].show.image){
           newShowImg.src = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
         } else {
@@ -43,13 +43,11 @@ function cleanList(){
     resultList.innerHTML = '';
   }
 }
-// function paintFavoriteStyle (event){
-//   const resultItems = document.querySelectorAll('.show-result');
-//   //const itemSelected = event.currentTarget;
-//   console.log(itemSelected);
-// }
+
+function addFavorites(event){
+  event.currentTarget.classList.toggle('show-result--favorite');
+}
 
 //listener
 buttonEl.addEventListener('click', searchHandler);
 //listener click favoritos
-// resultItem.addEventListener('click', paintFavoriteStyle);
