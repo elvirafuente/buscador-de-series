@@ -4,7 +4,8 @@
 const inputEl = document.querySelector('#show');
 const buttonEl = document.querySelector('.button');
 const resultList = document.querySelector('.result-list');
-let favoriteShowsList = [];
+let favoriteShowsArray = [];
+const favoriteListUl = document.querySelector('.favorite-list');
 
 
 
@@ -20,7 +21,7 @@ function searchHandler(){
       for (let i = 0; i < seriesList.length; i++){
         const showName = seriesList[i].show.name;
         const showId = seriesList[i].show.id;
-        console.log(`showId: ${showId}`);
+        //console.log(`showId: ${showId}`);
         const newShow = document.createElement('li');
         newShow.classList.add('show-result');
         const newShowTitle = document.createElement('h3');
@@ -49,7 +50,6 @@ function cleanList(){
 
 function addFavoritesClass(event){
   event.currentTarget.classList.toggle('show-result--favorite');
-  console.log(event.currentTarget.children[1].src);
   addToFavoritesList();
 }
 
@@ -57,8 +57,28 @@ function addToFavoritesList(){
   const favoriteShow = {};
   favoriteShow.name = event.currentTarget.children[0].innerHTML;
   favoriteShow.imgUrl = event.currentTarget.children[1].src;
-  favoriteShowsList.push(favoriteShow);
-  console.log(favoriteShowsList);
+  
+  for(let i = 0;i<favoriteShowsArray.length;i++){
+    
+    
+    if(favoriteShowsArray[i].name === event.currentTarget.children[0].innerHTML && event.currentTarget.children[1].src){
+      console.log('hola');
+    }
+  }
+  favoriteShowsArray.push(favoriteShow);
+  
+
+  const favoriteListLi = document.createElement('li');
+  const favoriteListLiTitle = document.createElement('h3');
+  const favoriteListLiImg = document.createElement('img');
+  favoriteListUl.appendChild(favoriteListLi);
+  favoriteListLi.appendChild(favoriteListLiTitle);
+  favoriteListLi.appendChild(favoriteListLiImg);
+  favoriteListLiImg.src = favoriteShow.imgUrl;
+  favoriteListLiTitle.innerHTML = favoriteShow.name;
+
+
+  //console.log(favoriteShowsArray);
 
 }
 
