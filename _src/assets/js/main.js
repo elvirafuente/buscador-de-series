@@ -73,8 +73,8 @@ function saveToLocalStorage(){
 function reloadFavorites(){
   if(localStorage.length !== 0){
     const savedFavorites = JSON.parse(localStorage.getItem('favoriteShowsArray'));
-    console.log(savedFavorites);
-
+    console.log(`saved favorites: ${savedFavorites.length}`);
+    
     for(let i=0;i<savedFavorites.length;i++){
       const favoriteListLi = document.createElement('li');
       const favoriteListLiTitle = document.createElement('h3');
@@ -84,6 +84,12 @@ function reloadFavorites(){
       favoriteListLi.appendChild(favoriteListLiImg);
       favoriteListLiImg.src = savedFavorites[i].imgUrl;
       favoriteListLiTitle.innerHTML = savedFavorites[i].name;
+      //añadelo al array
+      const favoriteShow = {};
+      favoriteShow.name = savedFavorites[i].name;
+      favoriteShow.imgUrl = savedFavorites[i].imgUrl;
+      favoriteShowsArray.push(favoriteShow);
+      console.log(`favorite Shows array: ${favoriteShowsArray}`);
     }
   }
 }
@@ -91,7 +97,6 @@ function reloadFavorites(){
 reloadFavorites();
 
 
-  console.log(localStorage.length);
 
 //listener
 buttonEl.addEventListener('click', searchHandler);
