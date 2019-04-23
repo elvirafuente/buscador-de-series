@@ -64,7 +64,6 @@ function addToFavoritesList(event){
   const favoriteShow = {};
   favoriteShow.name = event.currentTarget.children[0].innerHTML;
   favoriteShow.imgUrl = event.currentTarget.children[1].src;
-console.log(favoriteShowsArray.includes(favoriteShow.name));
   if(!event.currentTarget.classList.contains('show-result--favorite')){
     event.currentTarget.classList.add('show-result--favorite');
     favoriteShowsArray.push(favoriteShow);
@@ -95,8 +94,6 @@ function reloadFavorites(){
 }
 
 reloadFavorites();
-
-console.log(favoriteShowsArray);
 
 //listener
 buttonEl.addEventListener('click', searchHandler);
