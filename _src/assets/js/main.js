@@ -46,6 +46,17 @@ function cleanList(){
   }
 }
 
+function createList(itemUrl,itemName){
+  const favoriteListLi = document.createElement('li');
+  const favoriteListLiTitle = document.createElement('h3');
+  const favoriteListLiImg = document.createElement('img');
+  favoriteListUl.appendChild(favoriteListLi);
+  favoriteListLi.appendChild(favoriteListLiTitle);
+  favoriteListLi.appendChild(favoriteListLiImg);
+  favoriteListLiImg.src = itemUrl;
+  favoriteListLiTitle.innerHTML = itemName;
+}
+
 function addToFavoritesList(event){
   const favoriteShow = {};
   favoriteShow.name = event.currentTarget.children[0].innerHTML;
@@ -55,14 +66,7 @@ function addToFavoritesList(event){
     event.currentTarget.classList.add('show-result--favorite');
     favoriteShowsArray.push(favoriteShow);
     saveToLocalStorage();
-    const favoriteListLi = document.createElement('li');
-    const favoriteListLiTitle = document.createElement('h3');
-    const favoriteListLiImg = document.createElement('img');
-    favoriteListUl.appendChild(favoriteListLi);
-    favoriteListLi.appendChild(favoriteListLiTitle);
-    favoriteListLi.appendChild(favoriteListLiImg);
-    favoriteListLiImg.src = favoriteShow.imgUrl;
-    favoriteListLiTitle.innerHTML = favoriteShow.name;
+    createList(favoriteShow.imgUrl,favoriteShow.name);
   }
 }
 
@@ -76,14 +80,8 @@ function reloadFavorites(){
     console.log(`saved favorites: ${savedFavorites.length}`);
     
     for(let i=0;i<savedFavorites.length;i++){
-      const favoriteListLi = document.createElement('li');
-      const favoriteListLiTitle = document.createElement('h3');
-      const favoriteListLiImg = document.createElement('img');
-      favoriteListUl.appendChild(favoriteListLi);
-      favoriteListLi.appendChild(favoriteListLiTitle);
-      favoriteListLi.appendChild(favoriteListLiImg);
-      favoriteListLiImg.src = savedFavorites[i].imgUrl;
-      favoriteListLiTitle.innerHTML = savedFavorites[i].name;
+
+      createList(savedFavorites[i].imgUrl,savedFavorites[i].name);
       //añadelo al array
       const favoriteShow = {};
       favoriteShow.name = savedFavorites[i].name;
