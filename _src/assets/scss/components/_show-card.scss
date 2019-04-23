@@ -9,19 +9,18 @@
     list-style: none;
     background-color: $primaryColor50;
     margin:20px;
-    padding: 5px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     font-family: $fontTitle;
+    font-size: 20px;
+    color:$primaryColor500;
 }
 
-
-
 .show-result--favorite {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 30px;
-    background-color:  $primaryColor100;
+    background-color:  $primaryColor200;
+    color:white;
 }
 

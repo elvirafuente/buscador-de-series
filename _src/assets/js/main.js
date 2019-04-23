@@ -23,7 +23,6 @@ function searchHandler(){
         const newShow = document.createElement('li');
         newShow.classList.add('show-result');
         const newShowTitle = document.createElement('h3');
-        newShowTitle.classList.add('show-result__title');
         const newShowTitleContent = document.createTextNode(showName);
         const newShowImg = document.createElement('img');
         resultList.appendChild(newShow);
