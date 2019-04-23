@@ -23,6 +23,7 @@ function searchHandler(){
         const newShow = document.createElement('li');
         newShow.classList.add('show-result');
         const newShowTitle = document.createElement('h3');
+        newShowTitle.classList.add('show-result__title');
         const newShowTitleContent = document.createTextNode(showName);
         const newShowImg = document.createElement('img');
         resultList.appendChild(newShow);
@@ -48,11 +49,14 @@ function cleanList(){
 
 function createList(itemUrl,itemName){
   const favoriteListLi = document.createElement('li');
+  favoriteListLi.classList.add('favorite-item');
   const favoriteListLiTitle = document.createElement('h3');
+  favoriteListLiTitle.classList.add('favorite-item__title');
   const favoriteListLiImg = document.createElement('img');
+  favoriteListLiImg.classList.add('favorite-item__img');
   favoriteListUl.appendChild(favoriteListLi);
-  favoriteListLi.appendChild(favoriteListLiTitle);
   favoriteListLi.appendChild(favoriteListLiImg);
+  favoriteListLi.appendChild(favoriteListLiTitle);
   favoriteListLiImg.src = itemUrl;
   favoriteListLiTitle.innerHTML = itemName;
 }
