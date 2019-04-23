@@ -20,7 +20,7 @@ function searchHandler(){
       const seriesList = data;
       for (let i = 0; i < seriesList.length; i++){
         const showName = seriesList[i].show.name;
-        const showId = seriesList[i].show.id;
+        //const showId = seriesList[i].show.id;
         //console.log(`showId: ${showId}`);
         const newShow = document.createElement('li');
         newShow.classList.add('show-result');
@@ -31,7 +31,7 @@ function searchHandler(){
         newShow.appendChild(newShowTitle);
         newShowTitle.appendChild(newShowTitleContent);
         newShow.appendChild(newShowImg);
-        newShow.addEventListener('click', addFavoritesClass);
+        newShow.addEventListener('click', addToFavoritesList);
         if(!seriesList[i].show.image){
           newShowImg.src = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
         } else {
@@ -48,39 +48,28 @@ function cleanList(){
   }
 }
 
-function addFavoritesClass(event){
-  event.currentTarget.classList.toggle('show-result--favorite');
-  addToFavoritesList();
-}
-
-function addToFavoritesList(){
+function addToFavoritesList(event){
+  console.log(event.currentTarget);
   const favoriteShow = {};
   favoriteShow.name = event.currentTarget.children[0].innerHTML;
   favoriteShow.imgUrl = event.currentTarget.children[1].src;
-  
-  for(let i = 0;i<favoriteShowsArray.length;i++){
-    
-    
-    if(favoriteShowsArray[i].name === event.currentTarget.children[0].innerHTML && event.currentTarget.children[1].src){
-      console.log('hola');
-    }
+  console.log(favoriteShowsArray);
+
+  if(!event.currentTarget.classList.contains  ('show-result--favorite')){
+    event.currentTarget.classList.add('show-result--favorite');
+    favoriteShowsArray.push(favoriteShow);
+    const favoriteListLi = document.createElement('li');
+    const favoriteListLiTitle = document.createElement('h3');
+    const favoriteListLiImg = document.createElement('img');
+    favoriteListUl.appendChild(favoriteListLi);
+    favoriteListLi.appendChild(favoriteListLiTitle);
+    favoriteListLi.appendChild(favoriteListLiImg);
+    favoriteListLiImg.src = favoriteShow.imgUrl;
+    favoriteListLiTitle.innerHTML = favoriteShow.name;
   }
-  favoriteShowsArray.push(favoriteShow);
-  
-
-  const favoriteListLi = document.createElement('li');
-  const favoriteListLiTitle = document.createElement('h3');
-  const favoriteListLiImg = document.createElement('img');
-  favoriteListUl.appendChild(favoriteListLi);
-  favoriteListLi.appendChild(favoriteListLiTitle);
-  favoriteListLi.appendChild(favoriteListLiImg);
-  favoriteListLiImg.src = favoriteShow.imgUrl;
-  favoriteListLiTitle.innerHTML = favoriteShow.name;
-
-
-  //console.log(favoriteShowsArray);
 
 }
+
 
 //listener
 buttonEl.addEventListener('click', searchHandler);
