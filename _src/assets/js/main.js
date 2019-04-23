@@ -68,8 +68,7 @@ function addToFavoritesList(event){
     event.currentTarget.classList.add('show-result--favorite');
     favoriteShowsArray.push(favoriteShow);
     saveToLocalStorage();
-    createList(favoriteShow.imgUrl,favoriteShow.name);
-        
+    createList(favoriteShow.imgUrl,favoriteShow.name);   
   }
 }
 
@@ -78,11 +77,9 @@ function saveToLocalStorage(){
 }
 
 function reloadFavorites(){
-  if(localStorage){
-    const savedFavorites = JSON.parse(localStorage.getItem('favoriteShowsArray'));
-        
+  const savedFavorites = JSON.parse(localStorage.getItem('favoriteShowsArray'));
+  if(savedFavorites){
     for(let i=0;i<savedFavorites.length;i++){
-
       createList(savedFavorites[i].imgUrl,savedFavorites[i].name);
       //añadelo al array
       const favoriteShow = {};
