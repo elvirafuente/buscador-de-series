@@ -89,7 +89,6 @@ function reloadFavorites(){
       favoriteShow.name = savedFavorites[i].name;
       favoriteShow.imgUrl = savedFavorites[i].imgUrl;
       favoriteShowsArray.push(favoriteShow);
-      console.log(`favorite Shows array: ${favoriteShowsArray}`);
     }
   }
 }
