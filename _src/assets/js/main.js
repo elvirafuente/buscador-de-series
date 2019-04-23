@@ -4,9 +4,9 @@
 const inputEl = document.querySelector('#show');
 const buttonEl = document.querySelector('.button');
 const resultList = document.querySelector('.result-list');
-let favoriteShowsArray = [];
 const favoriteListUl = document.querySelector('.favorite-list');
-
+//array de favoritos
+let favoriteShowsArray = [];
 
 
 function searchHandler(){
@@ -20,8 +20,6 @@ function searchHandler(){
       const seriesList = data;
       for (let i = 0; i < seriesList.length; i++){
         const showName = seriesList[i].show.name;
-        //const showId = seriesList[i].show.id;
-        //console.log(`showId: ${showId}`);
         const newShow = document.createElement('li');
         newShow.classList.add('show-result');
         const newShowTitle = document.createElement('h3');
@@ -49,15 +47,14 @@ function cleanList(){
 }
 
 function addToFavoritesList(event){
-  console.log(event.currentTarget);
   const favoriteShow = {};
   favoriteShow.name = event.currentTarget.children[0].innerHTML;
   favoriteShow.imgUrl = event.currentTarget.children[1].src;
-  console.log(favoriteShowsArray);
 
   if(!event.currentTarget.classList.contains  ('show-result--favorite')){
     event.currentTarget.classList.add('show-result--favorite');
     favoriteShowsArray.push(favoriteShow);
+    localStorage.setItem('favoriteShowsArray', JSON.stringify(favoriteShowsArray));
     const favoriteListLi = document.createElement('li');
     const favoriteListLiTitle = document.createElement('h3');
     const favoriteListLiImg = document.createElement('img');
@@ -67,10 +64,18 @@ function addToFavoritesList(event){
     favoriteListLiImg.src = favoriteShow.imgUrl;
     favoriteListLiTitle.innerHTML = favoriteShow.name;
   }
-
 }
 
+// function reloadFavorites(){
+//   const savedFavorites = JSON.parse(localStorage.getItem('favoriteShowsArray'));
+//   console.log(savedFavorites);
 
+//   for(let i=0;i<favoriteShowsArray.length;i++){
+
+//   }
+// }
+
+// reloadFavorites();
 //listener
 buttonEl.addEventListener('click', searchHandler);
-//listener click favoritos
+
