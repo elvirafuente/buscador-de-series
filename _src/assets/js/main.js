@@ -78,7 +78,7 @@ function saveToLocalStorage(){
 }
 
 function reloadFavorites(){
-  if(localStorage.length !== 0){
+  if(localStorage){
     const savedFavorites = JSON.parse(localStorage.getItem('favoriteShowsArray'));
         
     for(let i=0;i<savedFavorites.length;i++){
