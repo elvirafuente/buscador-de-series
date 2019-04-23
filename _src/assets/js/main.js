@@ -80,8 +80,7 @@ function saveToLocalStorage(){
 function reloadFavorites(){
   if(localStorage.length !== 0){
     const savedFavorites = JSON.parse(localStorage.getItem('favoriteShowsArray'));
-    console.log(`saved favorites: ${savedFavorites.length}`);
-    
+        
     for(let i=0;i<savedFavorites.length;i++){
 
       createList(savedFavorites[i].imgUrl,savedFavorites[i].name);
