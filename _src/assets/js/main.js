@@ -64,12 +64,13 @@ function addToFavoritesList(event){
   const favoriteShow = {};
   favoriteShow.name = event.currentTarget.children[0].innerHTML;
   favoriteShow.imgUrl = event.currentTarget.children[1].src;
-
-  if(!event.currentTarget.classList.contains  ('show-result--favorite')){
+console.log(favoriteShowsArray.includes(favoriteShow.name));
+  if(!event.currentTarget.classList.contains('show-result--favorite')){
     event.currentTarget.classList.add('show-result--favorite');
     favoriteShowsArray.push(favoriteShow);
     saveToLocalStorage();
     createList(favoriteShow.imgUrl,favoriteShow.name);
+        
   }
 }
 
@@ -95,7 +96,7 @@ function reloadFavorites(){
 
 reloadFavorites();
 
-
+console.log(favoriteShowsArray);
 
 //listener
 buttonEl.addEventListener('click', searchHandler);
