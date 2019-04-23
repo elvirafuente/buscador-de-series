@@ -54,7 +54,7 @@ function addToFavoritesList(event){
   if(!event.currentTarget.classList.contains  ('show-result--favorite')){
     event.currentTarget.classList.add('show-result--favorite');
     favoriteShowsArray.push(favoriteShow);
-    localStorage.setItem('favoriteShowsArray', JSON.stringify(favoriteShowsArray));
+    saveToLocalStorage();
     const favoriteListLi = document.createElement('li');
     const favoriteListLiTitle = document.createElement('h3');
     const favoriteListLiImg = document.createElement('img');
@@ -66,16 +66,33 @@ function addToFavoritesList(event){
   }
 }
 
-// function reloadFavorites(){
-//   const savedFavorites = JSON.parse(localStorage.getItem('favoriteShowsArray'));
-//   console.log(savedFavorites);
+function saveToLocalStorage(){
+  localStorage.setItem('favoriteShowsArray', JSON.stringify(favoriteShowsArray));
+}
 
-//   for(let i=0;i<favoriteShowsArray.length;i++){
+function reloadFavorites(){
+  if(localStorage.length !== 0){
+    const savedFavorites = JSON.parse(localStorage.getItem('favoriteShowsArray'));
+    console.log(savedFavorites);
 
-//   }
-// }
+    for(let i=0;i<savedFavorites.length;i++){
+      const favoriteListLi = document.createElement('li');
+      const favoriteListLiTitle = document.createElement('h3');
+      const favoriteListLiImg = document.createElement('img');
+      favoriteListUl.appendChild(favoriteListLi);
+      favoriteListLi.appendChild(favoriteListLiTitle);
+      favoriteListLi.appendChild(favoriteListLiImg);
+      favoriteListLiImg.src = savedFavorites[i].imgUrl;
+      favoriteListLiTitle.innerHTML = savedFavorites[i].name;
+    }
+  }
+}
 
-// reloadFavorites();
+reloadFavorites();
+
+
+  console.log(localStorage.length);
+
 //listener
 buttonEl.addEventListener('click', searchHandler);
 
