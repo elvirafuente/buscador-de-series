@@ -5,6 +5,7 @@ const inputEl = document.querySelector('#show');
 const buttonEl = document.querySelector('.button');
 const resultList = document.querySelector('.result-list');
 const favoriteListUl = document.querySelector('.favorite-list');
+const buttonLog = document.querySelector('.log');
 //array de favoritos
 let favoriteShowsArray = [];
 
@@ -18,17 +19,24 @@ function searchHandler(){
     })
     .then(function(data){ 
       const seriesList = data;
+      //console.log(seriesList[0].show.schedule.time);
       for (let i = 0; i < seriesList.length; i++){
         const showName = seriesList[i].show.name;
+        const showTime = seriesList[i].show.schedule.time;
+        
         const newShow = document.createElement('li');
         newShow.classList.add('show-result');
         const newShowTitle = document.createElement('h3');
         const newShowTitleContent = document.createTextNode(showName);
         const newShowImg = document.createElement('img');
+        const newShowTime = document.createElement('p');
+        const newShowTimeContent = document.createTextNode(showTime);
         resultList.appendChild(newShow);
         newShow.appendChild(newShowTitle);
         newShowTitle.appendChild(newShowTitleContent);
         newShow.appendChild(newShowImg);
+        newShow.appendChild(newShowTime);
+        newShowTime.appendChild(newShowTimeContent);
         newShow.addEventListener('click', addToFavoritesList);
         if(!seriesList[i].show.image){
           newShowImg.src = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
@@ -92,6 +100,18 @@ function reloadFavorites(){
 
 reloadFavorites();
 
+//
+function paintNames(){
+  const listLi = document.querySelectorAll('.show-result');
+  for (let i = 0; i<listLi.length; i++){
+    const title = listLi[i].querySelector('h3');
+    console.log(title.innerHTML);
+  }
+  
+}
+
+
 //listener
 buttonEl.addEventListener('click', searchHandler);
+buttonLog.addEventListener('click', paintNames);
 
