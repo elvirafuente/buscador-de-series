@@ -9,44 +9,64 @@ const favoriteListUl = document.querySelector('.favorite-list');
 let favoriteShowsArray = [];
 
 
-function searchHandler(){
+function searchHandler(event) {
+  event.preventDefault();
   cleanList();
-  const inputShow = inputEl.value;  
-  fetch (`http://api.tvmaze.com/search/shows?q=${inputShow}`)
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(data){ 
-      const seriesList = data;
-      for (let i = 0; i < seriesList.length; i++){
-        const showName = seriesList[i].show.name;
-        const newShow = document.createElement('li');
-        newShow.classList.add('show-result');
-        const newShowTitle = document.createElement('h3');
-        const newShowTitleContent = document.createTextNode(showName);
-        const newShowImg = document.createElement('img');
-        resultList.appendChild(newShow);
-        newShow.appendChild(newShowTitle);
-        newShowTitle.appendChild(newShowTitleContent);
-        newShow.appendChild(newShowImg);
-        newShow.addEventListener('click', addToFavoritesList);
-        if(!seriesList[i].show.image){
-          newShowImg.src = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
+  const inputShow = inputEl.value;
+  if (inputShow) {
+    fetch(`http://api.tvmaze.com/search/shows?q=${inputShow}`)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        const seriesList = data;
+        if (!seriesList.length) {
+          const newMessage = `No hay resultados para ${inputShow} :(`;
+          const newMessageEl = document.createElement('li');
+          newMessageEl.classList.add('message')
+          const newMessageContent = document.createTextNode(newMessage);
+          resultList.appendChild(newMessageEl);
+          newMessageEl.appendChild(newMessageContent);
         } else {
-          const showImgUrl = seriesList[i].show.image.medium;
-          newShowImg.src = showImgUrl;
+          for (let i = 0; i < seriesList.length; i++) {
+            const showName = seriesList[i].show.name;
+            const newShow = document.createElement('li');
+            newShow.classList.add('show-result');
+            const newShowTitle = document.createElement('h3');
+            const newShowTitleContent = document.createTextNode(showName);
+            const newShowImg = document.createElement('img');
+            resultList.appendChild(newShow);
+            newShow.appendChild(newShowTitle);
+            newShowTitle.appendChild(newShowTitleContent);
+            newShow.appendChild(newShowImg);
+            newShow.addEventListener('click', addToFavoritesList);
+            if (!seriesList[i].show.image) {
+              newShowImg.src = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
+            } else {
+              const showImgUrl = seriesList[i].show.image.medium;
+              newShowImg.src = showImgUrl;
+            }
+          }
         }
-      }    
-    });
+      })
+  } else {
+    const newMessage = 'Introduce el nombre de una serie y pincha en la lupa';
+    const newMessageEl = document.createElement('li');
+    newMessageEl.classList.add('message')
+    const newMessageContent = document.createTextNode(newMessage);
+    resultList.appendChild(newMessageEl);
+    newMessageEl.appendChild(newMessageContent);
+  }
+
 }
 
-function cleanList(){
-  if(resultList.innerHTML){
+function cleanList() {
+  if (resultList.innerHTML) {
     resultList.innerHTML = '';
   }
 }
 
-function createList(itemUrl,itemName){
+function createList(itemUrl, itemName) {
   const favoriteListLi = document.createElement('li');
   favoriteListLi.classList.add('favorite-item');
   const favoriteListLiTitle = document.createElement('h3');
@@ -60,27 +80,28 @@ function createList(itemUrl,itemName){
   favoriteListLiTitle.innerHTML = itemName;
 }
 
-function addToFavoritesList(event){
+function addToFavoritesList(event) {
   const favoriteShow = {};
   favoriteShow.name = event.currentTarget.children[0].innerHTML;
   favoriteShow.imgUrl = event.currentTarget.children[1].src;
-  if(!event.currentTarget.classList.contains('show-result--favorite')){
-    event.currentTarget.classList.add('show-result--favorite');
-    favoriteShowsArray.push(favoriteShow);
-    saveToLocalStorage();
-    createList(favoriteShow.imgUrl,favoriteShow.name);   
-  }
+  event.currentTarget.classList.toggle('show-result--favorite');
+  // if (!event.currentTarget.classList.contains('show-result--favorite')) {
+  //   event.currentTarget.classList.add('show-result--favorite');
+  //   favoriteShowsArray.push(favoriteShow);
+  //   saveToLocalStorage();
+  //   createList(favoriteShow.imgUrl, favoriteShow.name);
+  // }
 }
 
-function saveToLocalStorage(){
+function saveToLocalStorage() {
   localStorage.setItem('favoriteShowsArray', JSON.stringify(favoriteShowsArray));
 }
 
-function reloadFavorites(){
+function reloadFavorites() {
   const savedFavorites = JSON.parse(localStorage.getItem('favoriteShowsArray'));
-  if(savedFavorites){
-    for(let i=0;i<savedFavorites.length;i++){
-      createList(savedFavorites[i].imgUrl,savedFavorites[i].name);
+  if (savedFavorites) {
+    for (let i = 0; i < savedFavorites.length; i++) {
+      createList(savedFavorites[i].imgUrl, savedFavorites[i].name);
       //añadelo al array
       const favoriteShow = {};
       favoriteShow.name = savedFavorites[i].name;
